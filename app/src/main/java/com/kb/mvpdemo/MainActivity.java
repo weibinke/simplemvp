@@ -27,11 +27,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                startActivity(new Intent(MainActivity.this,FeedsActivity.class));
+
+                Intent intent = new Intent(MainActivity.this,FeedsActivity.class);
+                intent.putExtra(FeedsActivity.KEY_MSG,"Hello default message!");
+                startActivity(intent);
             }
         });
 
-        startActivity(new Intent(this,FeedsActivity.class));
+        Intent intent = new Intent(this,FeedsActivity.class);
+        intent.putExtra(FeedsActivity.KEY_MSG,"Hello default message!");
+        startActivity(intent);
     }
 
     @Override
