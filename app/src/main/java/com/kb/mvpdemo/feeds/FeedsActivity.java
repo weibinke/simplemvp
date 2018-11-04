@@ -20,8 +20,6 @@ public class FeedsActivity extends BaseActivity<Feeds.IFeedsView,FeedsPresenter>
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.feeds_activity);
-        String msg = getIntent().getStringExtra(KEY_MSG);
-        Log.i(TAG,"onCreate msg=" + msg);
         getPresenter().loadFeeds();
     }
 
@@ -33,6 +31,8 @@ public class FeedsActivity extends BaseActivity<Feeds.IFeedsView,FeedsPresenter>
 
     @Override
     protected FeedsPresenter createPresenter() {
-        return new FeedsPresenter();
+        String channel = getIntent().getStringExtra(KEY_MSG);
+        Log.i(TAG,"onCreate msg=" + channel);
+        return new FeedsPresenter(channel);
     }
 }

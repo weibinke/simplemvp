@@ -29,13 +29,13 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
 
                 Intent intent = new Intent(MainActivity.this,FeedsActivity.class);
-                intent.putExtra(FeedsActivity.KEY_MSG,"Hello default message!");
+                intent.putExtra(FeedsActivity.KEY_MSG,"10000");
                 startActivity(intent);
             }
         });
 
         Intent intent = new Intent(this,FeedsActivity.class);
-        intent.putExtra(FeedsActivity.KEY_MSG,"Hello default message!");
+        intent.putExtra(FeedsActivity.KEY_MSG,"10000");
         startActivity(intent);
     }
 
