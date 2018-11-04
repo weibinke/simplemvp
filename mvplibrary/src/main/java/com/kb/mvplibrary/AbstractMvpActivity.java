@@ -1,47 +1,42 @@
 package com.kb.mvplibrary;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 /**
  * Created by Weibinke on 2018/11/4.
  */
-public abstract class BaseActivity <V, P extends BasePresenter<V>>extends AppCompatActivity implements BaseView{
+public abstract class AbstractMvpActivity <V extends BaseView, P extends BasePresenter<V>>extends Activity implements BaseView{
 
-    private static final String TAG = "BaseActivity";
-    private P presenter;
+    private static final String TAG = "AbstractMvpActivity";
+    private P mPresenter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (presenter == null){
-            presenter = createPresenter();
+        if (mPresenter == null){
+            mPresenter = createPresenter();
         }
 
-        if (presenter == null){
-            Log.e(TAG,"onCreate presenter failed");
-
-            finish();
-            return;
+        if(mPresenter != null){
+            mPresenter.attachView((V) this);
+            mPresenter.onCreatePresenter(savedInstanceState);
         }
-        presenter.attachView((V) this);
-        presenter.onCreatePresenter(savedInstanceState);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (presenter != null){
-            presenter.detachView();
+        if (mPresenter != null){
+            mPresenter.detachView();
         }
     }
 
     abstract protected P createPresenter();
 
     public P getPresenter(){
-        return presenter;
+        return mPresenter;
     }
 
     @Override
@@ -52,8 +47,8 @@ public abstract class BaseActivity <V, P extends BasePresenter<V>>extends AppCom
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (presenter != null){
-            presenter.onSaveInstanceState(outState);
+        if (mPresenter != null){
+            mPresenter.onSaveInstanceState(outState);
         }
     }
 }

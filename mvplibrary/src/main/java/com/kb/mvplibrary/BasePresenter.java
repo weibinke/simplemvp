@@ -7,7 +7,7 @@ import android.util.Log;
 /**
  * Created by Weibinke on 2018/11/4.
  */
-public class BasePresenter<V>{
+public class BasePresenter<V extends BaseView>{
     private static final String TAG = "BasePresenter";
     private V view;
 
@@ -33,7 +33,7 @@ public class BasePresenter<V>{
         return view;
     }
 
-    public boolean isAttach(){
+    protected boolean isAttach(){
         return view != null;
     }
 
@@ -42,7 +42,7 @@ public class BasePresenter<V>{
             super("View not attached");
         }
     }
-    public void checkViewAttach(){
+    protected void checkViewAttach(){
         if (view == null){
             throw new ViewNotAttachedException();
         }

@@ -18,7 +18,7 @@ public class FeedsPresenter extends BasePresenter<Feeds.IFeedsView> implements F
     public void loadFeeds() {
         Feeds.IFeedsView view = getView();
         if (view != null){
-            getView().showFeeds("loading chanel:" + channel + "...");
+            getView().showLoading();
         }
 
         new Handler().postDelayed(new Runnable() {
