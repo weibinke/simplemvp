@@ -4,15 +4,17 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import java.lang.ref.WeakReference;
+
 /**
  * Created by Weibinke on 2018/11/4.
  */
 public class BasePresenter<V extends BaseView>{
     private static final String TAG = "BasePresenter";
-    private V view;
+    private WeakReference<V> view;
 
     public void attachView(V view){
-        this.view = view;
+        this.view = new WeakReference<>(view);
         Log.i(TAG,"attachView");
     }
 
@@ -30,11 +32,11 @@ public class BasePresenter<V extends BaseView>{
     }
 
     protected V getView(){
-        return view;
+        return view != null ? view.get() : null;
     }
 
     protected boolean isAttach(){
-        return view != null;
+        return getView() != null;
     }
 
     public static class ViewNotAttachedException extends RuntimeException{
@@ -43,7 +45,7 @@ public class BasePresenter<V extends BaseView>{
         }
     }
     protected void checkViewAttach(){
-        if (view == null){
+        if (getView() == null){
             throw new ViewNotAttachedException();
         }
     }
